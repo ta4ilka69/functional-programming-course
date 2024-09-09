@@ -1,0 +1,16 @@
+name: HLint
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  hlint:
+    name: Scan code with HLint
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: haskell-actions/hlint-scan@c81f3176108e60bbce2d5a223e9297a8406deb92
