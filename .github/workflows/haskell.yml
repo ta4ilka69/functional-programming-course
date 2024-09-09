@@ -18,13 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Install Stack
+        run: |
+          curl -sSL https://get.haskellstack.org/ | sh
 
       - name: Install Ormolu
         run: |
-          curl -sSL https://get-ghcup.haskell.org | sh -s -- -y
-          ~/.ghcup/bin/ghcup install ormolu
+          stack install ormolu
 
       - name: Check Ormolu formatting
         run: |
-          ~/.ghcup/bin/ormolu --mode check $(find . -name '*.hs')
+          ~/.local/bin/ormolu --mode check $(find . -name '*.hs')
