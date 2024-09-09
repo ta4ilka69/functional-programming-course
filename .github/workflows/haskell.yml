@@ -31,10 +31,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-stack-
 
-      - name: Install Stack
-        run: |
-          curl -sSL https://get.haskellstack.org/ | sh
-
       - name: Install Ormolu
         run: |
           stack install ormolu
