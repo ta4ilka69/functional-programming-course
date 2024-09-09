@@ -20,6 +20,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install Ormolu
+        run: |
+          stack install ormolu
+
       - name: Cache Stack dependencies
         uses: actions/cache@v3
         with:
@@ -30,10 +34,6 @@ jobs:
           key: ${{ runner.os }}-stack-${{ hashFiles('**/stack.yaml') }}
           restore-keys: |
             ${{ runner.os }}-stack-
-
-      - name: Install Ormolu
-        run: |
-          stack install ormolu
 
       - name: Check Ormolu formatting
         run: |
