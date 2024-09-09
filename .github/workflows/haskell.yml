@@ -20,10 +20,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Stack
-        run: |
-          curl -sSL https://get.haskellstack.org/ | sh
-
       - name: Install Ormolu
         run: |
           stack install ormolu
