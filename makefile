@@ -15,7 +15,7 @@ check-format:
 	@echo "Checking formatting in labs directory..."
 	@for %%f in ($(HS_FILES)) do ( \
 		echo Checking %%f... && \
-		ormolu --mode inplace %%f || exit 1 \
+		ormolu --mode check %%f || exit 1 \
 	)
 
 .PHONY: all clean check-format
