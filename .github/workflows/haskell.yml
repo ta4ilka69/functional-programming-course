@@ -31,6 +31,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-stack-
 
+      - name: Install Ormolu
+        run: |
+          if [ ! -f ~/.local/bin/ormolu ]; then
+            stack install ormolu
+          fi
+
       - name: Check Ormolu formatting
         run: |
           ~/.local/bin/ormolu --mode check $(find . -name '*.hs')
