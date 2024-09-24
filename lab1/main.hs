@@ -3,4 +3,6 @@ module Main where
 import Lab1
 
 main :: IO ()
-main = print $ fibbonachiSum 4000000
+main = do
+  print $ fibbonachiSum1 4000000
+  print $ fibbonachiSum2 4000000
