@@ -1,8 +1,10 @@
 module Main where
 
-import Lab1
+import Fibonacci
 
 main :: IO ()
 main = do
-  print $ fibbonachiSum1 4000000
-  print $ fibbonachiSum2 4000000
+  print $ fibonacciSum1 4000000
+  print $ fibonacciSum2 4000000
+  print $ fibonacciSum3 4000000
+  print $ fibonacciSum4 4000000
