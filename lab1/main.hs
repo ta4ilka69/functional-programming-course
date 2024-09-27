@@ -11,3 +11,5 @@ main = do
   print $ fibonacciSum4 4000000
   print $ fibonacciSum5 4000000
   print $ powersCount1 100 100
+  print $ powersCount2 100 100
+  print $ powersCount3 100 100
