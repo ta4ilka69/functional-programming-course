@@ -5,7 +5,8 @@ HS_FILES = $(wildcard lab*/*.hs)
 
 all: lab1
 
-lab1: lab1/main.hs lab1/Fibonacci.hs
+lab1: lab1/main.hs lab1/Fibonacci.hs lab1/Powers.hs
+	make format
 	$(STACK_GHC) $^ -hidir $(BUILD_DIR) -odir $(BUILD_DIR) -o $(OUTPUT_DIR)/$@
 
 clean:
