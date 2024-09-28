@@ -16,6 +16,6 @@ powersCount1 a b = powersCount' empty 2 2
 powersCount2 :: Integer -> Integer -> Int
 powersCount2 a b = size $ foldr insert empty [x ^ y | x <- [2 .. a], y <- [2 .. b]]
 
--- map-generated or iterate-generated solution, whats simplier
+-- map-generated solution
 powersCount3 :: Integer -> Integer -> Int
 powersCount3 a b = size $ foldr insert empty $ map (^) [2 .. a] <*> [2 .. b]
