@@ -44,9 +44,6 @@ jobs:
     name: Run Unit and Property Tests for lab2
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Install dependencies
         run: |
           if ! command -v stack &> /dev/null; then
