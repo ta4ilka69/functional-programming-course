@@ -53,6 +53,17 @@ jobs:
             curl -sSL https://get.haskellstack.org/ | sh
           fi
           stack install HUnit
+          stack install QuickCheck
+      - name: Cache Stack dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.stack
+            ~/.ghcup
+            ~/.local/bin/ormolu
+          key: ${{ runner.os }}-stack-${{ hashFiles('**/stack.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-stack-
       - name: Build and run tests
         run: |
           mkdir -p runnable
