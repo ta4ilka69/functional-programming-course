@@ -52,5 +52,6 @@ jobs:
 
       - name: Build and run tests
         run: |
+          mkdir runnable
           make lab2
           ./runnable/lab2
