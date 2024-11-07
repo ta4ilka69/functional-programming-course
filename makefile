@@ -14,7 +14,8 @@ lab2: lab2/main.hs lab2/AvlBag.hs lab2/UnitTest.hs lab2/PropertyBasedTest.hs
 	$(STACK_GHC) $^ -hidir $(BUILD_DIR) -odir $(BUILD_DIR) -o $(OUTPUT_DIR)/$@
 
 clean:
-	rmdir -r $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)
+	rm -rf $(OUTPUT_DIR)
 
 format:
 	@echo "Checking formatting in labs directory..."
