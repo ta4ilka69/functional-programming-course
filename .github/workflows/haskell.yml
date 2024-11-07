@@ -55,5 +55,6 @@ jobs:
 
       - name: Build and run tests
         run: |
+          make clean
           make lab2
           ./runnable/lab2
