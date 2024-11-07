@@ -52,10 +52,9 @@ jobs:
           if ! command -v stack &> /dev/null; then
             curl -sSL https://get.haskellstack.org/ | sh
           fi
+          stack install HUnit
       - name: Build and run tests
         run: |
           mkdir -p runnable
-          chmod -R 755 runnable
-          ls -la
           make -f makefile -C . lab2
           ./runnable/lab2
