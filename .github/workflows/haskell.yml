@@ -51,6 +51,7 @@ jobs:
         with:
           path: |
             ~/.stack
+            ~/.local/bin
           key: ${{ runner.os }}-stack-build-${{ hashFiles('**/stack.yaml') }}
           restore-keys: |
             ${{ runner.os }}-stack-build-
