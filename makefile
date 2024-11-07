@@ -24,4 +24,4 @@ format:
 		ormolu --mode inplace %%f || exit 1 \
 	)
 
-.PHONY: all clean format
+.PHONY: all clean format lab2 lab1
