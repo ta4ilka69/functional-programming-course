@@ -56,9 +56,7 @@ jobs:
             ${{ runner.os }}-stack-build-
       - name: Install dependencies
         run: |
-          if ! command -v stack &> /dev/null; then
-            curl -sSL https://get.haskellstack.org/ | sh
-          fi
+          stack path
           stack install HUnit
           stack install QuickCheck
 
