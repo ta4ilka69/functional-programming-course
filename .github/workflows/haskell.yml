@@ -53,5 +53,6 @@ jobs:
         run: |
           mkdir -p runnable
           chmod -R 755 runnable
-          make -f ./makefile lab2
+          ls -la
+          make -f makefile -C . lab2
           ./runnable/lab2
