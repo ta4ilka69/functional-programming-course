@@ -55,6 +55,7 @@ jobs:
           key: ${{ runner.os }}-stack-build-${{ hashFiles('**/stack.yaml') }}
           restore-keys: |
             ${{ runner.os }}-stack-build-
+          save-always: true
       - name: Install dependencies
         run: |
           stack path
