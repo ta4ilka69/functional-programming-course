@@ -1,4 +1,4 @@
-name: HLint
+name: Linter and Tests
 
 on:
   push:
@@ -40,3 +40,18 @@ jobs:
       - name: Check Ormolu formatting
         run: |
           ~/.local/bin/ormolu --mode check $(find . -name '*.hs')
+  run-tests:
+    name: Run Unit and Property Tests for lab2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          curl -sSL https://get.haskellstack.org/ | sh
+
+      - name: Build and run tests
+        run: |
+          make lab2
+          ./runnable/lab2
