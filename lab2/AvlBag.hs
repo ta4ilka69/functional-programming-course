@@ -99,19 +99,16 @@ filterAVLBag predicate (Node l v c r _) =
 replicateAVL :: (Ord a) => Int -> a -> AVLBag a
 replicateAVL n x = foldr insert Empty (replicate n x)
 
-foldlAVLBag :: (b -> a -> b) -> b -> AVLBag a -> b
-foldlAVLBag _ acc Empty = acc
-foldlAVLBag f acc (Node l v c r _) =
-  let accAfterLeft = foldlAVLBag f acc l
-      accAfterValue = foldl f accAfterLeft (replicate c v)
-   in foldlAVLBag f accAfterValue r
+instance Foldable AVLBag where
+  foldr :: (a -> b -> b) -> b -> AVLBag a -> b
+  foldr _ acc Empty = acc
+  foldr f acc (Node left value count right _) =
+    foldr f (foldr f (foldr f acc (replicate count value)) right) left
 
-foldrAVLBag :: (a -> b -> b) -> b -> AVLBag a -> b
-foldrAVLBag _ acc Empty = acc
-foldrAVLBag f acc (Node l v c r _) =
-  let accAfterRight = foldrAVLBag f acc r
-      accAfterValue = foldr f accAfterRight (replicate c v)
-   in foldrAVLBag f accAfterValue l
+  foldl :: (b -> a -> b) -> b -> AVLBag a -> b
+  foldl _ acc Empty = acc
+  foldl f acc (Node left value count right _) =
+    foldl f (foldl f (foldl f acc (replicate count value)) left) right
 
 instance (Ord a) => Semigroup (AVLBag a) where
   (<>) = union
@@ -129,9 +126,6 @@ union (Node l1 v1 c1 r1 _) t2 =
 insertMultiple :: (Ord a) => a -> Int -> AVLBag a -> AVLBag a
 insertMultiple x n tree = foldr (const (insert x)) tree [1 .. n]
 
-leftFold :: (b -> a -> b) -> b -> AVLBag a -> b
-leftFold = foldlAVLBag
-
 toList :: AVLBag a -> [a]
 toList Empty = []
 toList (Node l v c r _) = toList l ++ replicate c v ++ toList r
@@ -143,6 +137,3 @@ instance Functor AVLBag where
   fmap _ Empty = Empty
   fmap f (Node left value count right height') =
     Node (fmap f left) (f value) count (fmap f right) height'
-
-rightFold :: (a -> b -> b) -> b -> AVLBag a -> b
-rightFold = foldrAVLBag

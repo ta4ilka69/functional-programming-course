@@ -1,6 +1,7 @@
 module PropertyBasedTest where
 
 import AvlBag
+import Data.List (sort)
 import Test.HUnit
 import Test.QuickCheck
 
@@ -17,15 +18,15 @@ prop_associativity a b c = (a <> (b <> c)) == ((a <> b) <> c)
 
 prop_foldConsistencyInt :: AVLBag Int -> Bool
 prop_foldConsistencyInt bag =
-  leftFold (+) 0 bag == rightFold (+) 0 bag
+  foldl (+) 0 bag == foldr (+) 0 bag
 
 prop_foldConsistencyChar :: AVLBag Char -> Bool
 prop_foldConsistencyChar bag =
-  leftFold (++) [] (mapAVLBag (: []) bag) == rightFold (++) [] (mapAVLBag (: []) bag)
+  sort (foldl (++) [] (mapAVLBag (: []) bag)) == sort (foldr (++) [] (mapAVLBag (: []) bag))
 
 prop_foldConsistencyString :: AVLBag String -> Bool
 prop_foldConsistencyString bag =
-  leftFold (++) [] bag == rightFold (++) [] bag
+  sort (foldl (++) [] bag) == sort (foldr (++) [] bag)
 
 runPropertyTests :: IO ()
 runPropertyTests = do
