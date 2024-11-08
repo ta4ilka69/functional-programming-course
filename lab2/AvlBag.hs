@@ -1,5 +1,3 @@
-{-# LANGUAGE DeriveFunctor #-}
-
 module AvlBag where
 
 import Data.List (sort)
