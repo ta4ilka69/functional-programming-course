@@ -9,6 +9,16 @@ testInsert = TestCase $ do
   let bag = insert 10 (insert 5 (insert 5 Empty))
   assertEqual "Insert 5 twice and 10 once" [5, 5, 10] (toList bag)
 
+testDeleteMultiple :: Test
+testDeleteMultiple = TestCase $ do
+  let bag = foldr insert Empty [4, 3, 1, 2, 2, 2, 3]
+  let bag' = delete 2 bag
+  assertEqual "Delete occurrence of 2 (two occurrences remaining)" [1, 2, 2, 3, 3, 4] (toList bag')
+  let bag'' = delete 2 bag'
+  assertEqual "Delete another occurrence of 5" [1, 2, 3, 3, 4] (toList bag'')
+  let bag''' = delete 2 bag''
+  assertEqual "Delete last occurrence of 5" [1, 3, 3, 4] (toList bag''')
+
 testDelete :: Test
 testDelete = TestCase $ do
   let bag = delete 5 (insert 10 (insert 5 (insert 5 Empty)))
@@ -78,5 +88,6 @@ unitTests =
       TestLabel "Filter Test with Char" testFilterChar,
       TestLabel "Insert and Delete Test with String" testInsertDeleteString,
       TestLabel "Map Test with String" testMapString,
-      TestLabel "Filter Test with String" testFilterString
+      TestLabel "Filter Test with String" testFilterString,
+      TestLabel "Checking deleting multiply instance" testDeleteMultiple
     ]

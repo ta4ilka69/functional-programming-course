@@ -29,12 +29,10 @@ balanceFactor (Node left _ _ right _) = height left - height right
 rotateRight :: AVLBag a -> AVLBag a
 rotateRight (Node (Node ll lv lc lr lh) v c r _) =
   node ll lv lc (node lr v c r)
-rotateRight tree = tree
 
 rotateLeft :: AVLBag a -> AVLBag a
 rotateLeft (Node l v c (Node rl rv rc rr rh) _) =
   node (node l v c rl) rv rc rr
-rotateLeft tree = tree
 
 balance :: AVLBag a -> AVLBag a
 balance t@(Node l v c r h)
@@ -49,7 +47,6 @@ balance t@(Node l v c r h)
   | otherwise = t
   where
     bf = balanceFactor t
-balance t = t
 
 insert :: (Ord a) => a -> AVLBag a -> AVLBag a
 insert x Empty = Node Empty x 1 Empty 1
@@ -58,10 +55,10 @@ insert x (Node l v c r h)
   | x < v = balance $ node (insert x l) v c r
   | otherwise = balance $ node l v c (insert x r)
 
-findMin :: AVLBag a -> a
-findMin (Node Empty v _ _ _) = v
-findMin (Node l _ _ _ _) = findMin l
-findMin Empty = error "Empty AVLBag"
+findMinWithCount :: AVLBag a -> (a, Int)
+findMinWithCount (Node Empty v c _ _) = (v, c)
+findMinWithCount (Node l _ _ _ _) = findMinWithCount l
+findMinWithCount Empty = error "Empty AVLBag"
 
 removeMin :: AVLBag a -> AVLBag a
 removeMin (Node Empty _ _ r _) = r
@@ -80,8 +77,8 @@ delete x (Node l v c r h)
           (Empty, _) -> r
           (_, Empty) -> l
           _ ->
-            let minRight = findMin r
-             in balance $ node l minRight 1 (removeMin r)
+            let (minRight, minCount) = findMinWithCount r
+             in balance $ node l minRight minCount (removeMin r)
 
 mapAVLBag :: (Ord b) => (a -> b) -> AVLBag a -> AVLBag b
 mapAVLBag _ Empty = Empty
