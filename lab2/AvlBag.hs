@@ -86,7 +86,7 @@ mapAVLBag f (Node l v c r _) =
   let newValue = f v
       leftMapped = mapAVLBag f l
       rightMapped = mapAVLBag f r
-   in balance $ node leftMapped newValue c rightMapped
+   in node leftMapped newValue c rightMapped
 
 filterAVLBag :: (Ord a) => (a -> Bool) -> AVLBag a -> AVLBag a
 filterAVLBag _ Empty = Empty
