@@ -14,7 +14,7 @@ data AVLBag a
         right :: AVLBag a,
         height' :: Int
       }
-  deriving (Show, Functor)
+  deriving (Show)
 
 height :: AVLBag a -> Int
 height Empty = 0
@@ -143,6 +143,11 @@ toList (Node l v c r _) = toList l ++ replicate c v ++ toList r
 
 instance (Ord a) => Eq (AVLBag a) where
   bag1 == bag2 = sort (toList bag1) == sort (toList bag2)
+
+instance Functor AVLBag where
+  fmap _ Empty = Empty
+  fmap f (Node left value count right height') =
+    Node (fmap f left) (f value) count (fmap f right) height'
 
 rightFold :: (a -> b -> b) -> b -> AVLBag a -> b
 rightFold = foldrAVLBag
