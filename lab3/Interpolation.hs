@@ -14,7 +14,6 @@ lagrangeInterpolation rate points = map interpolate xs
   where
     (xMin, xMax) = (fst (head points), fst (last points))
     xs = [xMin, xMin + rate .. xMax]
-
     interpolate x =
       ( x,
         sum
