@@ -11,6 +11,9 @@ lab1: lab1/main.hs lab1/Fibonacci.hs lab1/Powers.hs
 lab2: lab2/main.hs lab2/AvlBag.hs lab2/UnitTest.hs lab2/PropertyBasedTest.hs
 	$(STACK_GHC) $^ -hidir $(BUILD_DIR) -odir $(BUILD_DIR) -o $(OUTPUT_DIR)/$@
 
+lab3: lab3/main.hs lab3/Interpolation.hs lab3/StreamProcessing.hs lab3/CommandLineParser.hs
+	$(STACK_GHC) $^ -hidir $(BUILD_DIR) -odir $(BUILD_DIR) -o $(OUTPUT_DIR)/$@
+
 clean:
 	rm -rf $(BUILD_DIR)
 	rm -rf $(OUTPUT_DIR)
