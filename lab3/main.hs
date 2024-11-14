@@ -1,33 +1,43 @@
 module Main where
 
 import CommandLineParser (Settings (..), parseArgs)
+import Control.Monad (void, when)
+import Data.List (sort)
 import Interpolation (Algorithm (..), Point, lagrangeInterpolation, linearInterpolation)
-import StreamProcessing (processStream, parsePoint)
+import StreamProcessing (parsePoint, processStream)
 import System.Environment (getArgs)
 import System.IO (isEOF)
 
 main :: IO ()
 main = do
   args <- getArgs
-  let (algorithms, rate) = parseArgs args
-  loop [] algorithms rate
+  case parseArgs args of
+    Left err -> void (putStrLn err)
+    Right settings -> loop [] settings
 
-loop :: [Point] -> [String] -> Double -> IO ()
-loop points algorithms rate = do
+loop :: [Point] -> Settings -> IO ()
+loop points (Settings algorithms rate) = do
   end <- isEOF
   if end
     then return ()
     else do
       line <- getLine
       let newPoint = parsePoint line
-      let updatedPoints = points ++ [newPoint]
-      when ("linear" `elem` algorithms && length updatedPoints == 2) $
-        printInterpolation (linearInterpolation rate updatedPoints)
+      putStrLn ""
+      case newPoint of
+        Nothing -> loop points (Settings algorithms rate)
+        Just pt -> do
+          let updatedPoints = pt : points
+          when ((Linear == algorithms || Both == algorithms) && length updatedPoints >= 2) $ do
+            putStrLn "Линейная (по последним двум):"
+            printInterpolation (linearInterpolation rate (sort $ take 2 updatedPoints))
+            putStrLn ""
 
-      when ("lagrange" `elem` algorithms && length updatedPoints >= 4) $
-        printInterpolation (lagrangeInterpolation rate updatedPoints)
-
-      loop updatedPoints algorithms rate
+          when ((Lagrange == algorithms || Both == algorithms) && length updatedPoints >= 4) $ do
+            putStrLn "Лагранж (по последним четырём):"
+            printInterpolation (lagrangeInterpolation rate (sort $ take 4 updatedPoints))
+            putStrLn ""
+          loop updatedPoints (Settings algorithms rate)
 
 printInterpolation :: [Point] -> IO ()
 printInterpolation = mapM_ (putStrLn . formatPoint)
