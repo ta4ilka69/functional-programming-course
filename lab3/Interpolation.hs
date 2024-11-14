@@ -6,7 +6,7 @@ data Algorithm = Linear | Lagrange | Both deriving (Eq, Show)
 
 linearInterpolation :: Double -> [Point] -> [Point]
 linearInterpolation rate [(x1, y1), (x2, y2)] =
-    [(x, y1 + (x - x1) * (y2 - y1) / (x2 - x1)) | x <- [x1, x1 + rate .. x2]]
+  [(x, y1 + (x - x1) * (y2 - y1) / (x2 - x1)) | x <- [x1, x1 + rate .. x2]]
 linearInterpolation _ _ = []
 
 lagrangeInterpolation :: Double -> [Point] -> [Point]
