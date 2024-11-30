@@ -25,7 +25,7 @@ streamLoop points settings = do
         Just pt -> do
           let newPoints = points ++ [pt]
           processPoints settings newPoints
-          let windowSize = if algorithm settings == Linear then 2 else 5
+          let windowSize = if algorithm settings == Linear then 2 else 4
           let updatedPoints = drop (length newPoints - windowSize) newPoints
           streamLoop updatedPoints settings
 
