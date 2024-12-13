@@ -70,3 +70,5 @@ jobs:
           mkdir -p runnable
           make -f makefile -C . lab2
           ./runnable/lab2
+          make -f makefile -C . lab3-test
+          ./runnable/lab3-test

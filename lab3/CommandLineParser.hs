@@ -7,7 +7,7 @@ data Settings = Settings
   { algorithm :: Algorithm,
     rate :: Double
   }
-  deriving (Show)
+  deriving (Show, Eq)
 
 parseArgs :: [String] -> Either String Settings
 parseArgs args = case args of
